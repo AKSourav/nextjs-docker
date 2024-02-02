@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react'
 import supabase from "../utils/client"
 import dayjs from 'dayjs';
@@ -8,7 +9,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 function Chat() {
   const [messages, setMessages] = useState([{ "id": 1, "text": "Welcome Here!" }]);
   const [text, setText] = useState("")
-  const [userName, setUserName] = useState(localStorage.getItem('userName') || `user${Math.floor(Math.random() * 100000)}`)
+  const [userName, setUserName] = useState(`user${Math.floor(Math.random() * 100000)}`)
   // extend dayjs with the plugins
   dayjs.extend(utc);
   dayjs.extend(relativeTime);
@@ -17,9 +18,10 @@ function Chat() {
     e.preventDefault();
 
     try {
+      const dataMsg = text;
       const { error } = await supabase.from("messages").insert([
         {
-          text: text,
+          text: dataMsg,
           username: userName,
         },
       ]);
@@ -28,24 +30,13 @@ function Chat() {
         return;
       }
       console.log("Successfully sent!");
-      // setText("");
     } catch (error) {
       console.log("error sending message:", error);
+    } finally {
+      setText('')
     }
+
   };
-
-  supabase.channel('schema-db-changes').on(
-    'postgres_changes',
-    {
-      event: 'INSERT', // Listen only to INSERTs
-      schema: 'public',
-    },
-    (payload) => {
-      setMessages([...messages, payload.new])
-      console.log("data", payload)
-    }
-  ).subscribe()
-
 
   const fetchMsg = async () => {
     const { data, error } = await supabase
@@ -58,9 +49,25 @@ function Chat() {
     setMessages([...data])
 
     console.log(data, error)
+
+    supabase.channel('schema-db-changes').on(
+      'postgres_changes',
+      {
+        event: 'INSERT', // Listen only to INSERTs
+        schema: 'public',
+      },
+      (payload) => {
+        setMessages((prev) => [...prev, payload.new])
+        console.log("data", payload)
+      }
+    ).subscribe()
   }
 
+
+
   useEffect(() => {
+    if (localStorage.getItem('userName'))
+      setUserName(localStorage.getItem('userName'));
     fetchMsg()
     console.log(messages)
   }, [])
@@ -94,7 +101,7 @@ function Chat() {
           </>
         )}
       </div>
-      <input type='text' className='ring-1' onChange={(e) => setText(e.target.value)} />
+      <input type='text' className='ring-1' value={text} onChange={(e) => setText(e.target.value)} />
       <div className='flex space-x-3'>
         {/* <button type='button' className='bg-red-600 px-2 py-1 rounded-md text-white' onClick={Subscribe}>Subscribe</button> */}
         <button type='button' className='bg-green-600 px-2 py-1 rounded-md text-white' onClick={handleSubmit}>Send</button>
