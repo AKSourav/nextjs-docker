@@ -31,6 +31,7 @@ function Chat() {
 
     try {
       const dataMsg = text;
+      if (!dataMsg || dataMsg === "") return alert("Please enter a message!");
       const { error } = await supabase.from("messages").insert([
         {
           text: dataMsg,
