@@ -1,6 +1,6 @@
 # CHAT APP : Using NEXTJS + DOCKER + RENDER + SUPABASE 
 
-This is a template for creating documentation with [Nextra](https://nextra.site).
+We were bored, so we made this.
 
 [**Live Demo →**](https://nextjsapp-u592.onrender.com/chat)
 
