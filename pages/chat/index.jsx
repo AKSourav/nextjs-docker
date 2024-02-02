@@ -177,6 +177,24 @@ function Chat() {
           </button>
         </div>
       </div>
+      <div className="text-lg pt-4">
+        A random project by{" "}
+        <a
+          href="https://github.com/rohitranjan-2702"
+          target="_blank"
+          className="font-medium text-blue-500 hover:underline"
+        >
+          RoHiT
+        </a>{" "}
+        n{" "}
+        <a
+          href="https://github.com/AKSourav"
+          target="_blank"
+          className="font-medium text-blue-500 hover:underline"
+        >
+          AKSourav
+        </a>
+      </div>
     </div>
   );
 }
