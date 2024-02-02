@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import supabase from "../../utils/client";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc"; // import utc plugin
@@ -13,6 +13,14 @@ function Chat() {
   const [userName, setUserName] = useState(
     `user${Math.floor(Math.random() * 100000)}`
   );
+  const chatbox = useRef(null);
+
+  useEffect(() => {
+    if (chatbox.current) {
+      chatbox.current.scrollTop = chatbox.current.scrollHeight;
+    }
+  }, [messages]);
+
   // extend dayjs with the plugins
   dayjs.extend(utc);
   dayjs.extend(relativeTime);
@@ -33,6 +41,7 @@ function Chat() {
         return;
       }
       console.log("Successfully sent!");
+      // chatbox.current.scrollIntoView({ behavior: "smooth", block: "end" });
     } catch (error) {
       console.log("error sending message:", error);
     } finally {
@@ -44,7 +53,7 @@ function Chat() {
     const { data, error } = await supabase
       .from("messages")
       .select()
-      .range(0, 49)
+      // .range(0, 49)
       .order("id", { ascending: true });
 
     setMessages([...data]);
@@ -100,7 +109,10 @@ function Chat() {
         <LiveCounter count={messages.length} />
       </div>
       <div className="px-24 w-full space-y-4">
-        <div className="w-full h-96 p-2 pt-4 rounded-xl ring-1 overflow-y-scroll flex flex-col justify-center items-start">
+        <div
+          className="w-full h-96 p-2 pt-4 rounded-xl ring-1 overflow-y-scroll flex flex-col justify-center items-start"
+          ref={chatbox}
+        >
           {messages.length != 0 ? (
             messages.map((message, index) => (
               <>
@@ -121,13 +133,13 @@ function Chat() {
             </>
           )}
         </div>
-        <div className="flex space-x-3 w-full px-32">
+        <div className="flex space-x-3 w-full lg:px-32 justify-center">
           <input
             type="text"
-            className="ring-1 rounded-2xl w-full px-3"
+            className="ring-1 rounded-2xl  w-full px-3"
             placeholder="Type your message here..."
             value={text}
-            // onKeyDown={handleSubmit}
+            onKeyDown={(e) => (e.key === "Enter" ? handleSubmit(e) : null)}
             onChange={(e) => setText(e.target.value)}
           />
 
