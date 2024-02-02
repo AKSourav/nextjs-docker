@@ -6,6 +6,7 @@ import utc from "dayjs/plugin/utc"; // import utc plugin
 import relativeTime from "dayjs/plugin/relativeTime";
 import Message from "../../components/Message";
 import LiveCounter from "../../components/LiveCounter";
+import Script from "next/script";
 
 function Chat() {
   const [messages, setMessages] = useState([{ id: 1, text: "Welcome Here!" }]);
@@ -90,7 +91,18 @@ function Chat() {
 
   return (
     <div className="p-2 w-screen flex justify-start items-center h-screen flex-col space-y-4">
-      <div className="text-4xl font-bold mt-8">CHAT APP</div>
+      <div className="text-4xl font-bold mt-8 flex items-center space-x-4">
+        CHAT APP
+        <button
+          type="button"
+          onClick={() =>
+            window.open("https://github.com/AKSourav/nextjs-docker")
+          }
+          class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-2 me-2 mx-2 :bg-gray-800 :text-white :border-gray-600 :hover:bg-gray-700 :hover:border-gray-600 :focus:ring-gray-700 flex items-center space-x-2"
+        >
+          Github
+        </button>
+      </div>
       <div className="w-full text-center space-x-2">
         <label htmlFor="username" className="font-semibold">
           Username
