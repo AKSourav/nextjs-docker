@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import supabase from "../utils/client"
+import supabase from "../../utils/client"
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc'; // import utc plugin
 import relativeTime from 'dayjs/plugin/relativeTime';
