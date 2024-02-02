@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc"; // import utc plugin
 import relativeTime from "dayjs/plugin/relativeTime";
 import Message from "../../components/Message";
+import LiveCounter from "../../components/LiveCounter";
 
 function Chat() {
   const [messages, setMessages] = useState([{ id: 1, text: "Welcome Here!" }]);
@@ -19,25 +20,23 @@ function Chat() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (e.key === "Enter") {
-      try {
-        const dataMsg = text;
-        const { error } = await supabase.from("messages").insert([
-          {
-            text: dataMsg,
-            username: userName,
-          },
-        ]);
-        if (error) {
-          console.error(error.message);
-          return;
-        }
-        console.log("Successfully sent!");
-      } catch (error) {
-        console.log("error sending message:", error);
-      } finally {
-        setText("");
+    try {
+      const dataMsg = text;
+      const { error } = await supabase.from("messages").insert([
+        {
+          text: dataMsg,
+          username: userName,
+        },
+      ]);
+      if (error) {
+        console.error(error.message);
+        return;
       }
+      console.log("Successfully sent!");
+    } catch (error) {
+      console.log("error sending message:", error);
+    } finally {
+      setText("");
     }
   };
 
@@ -96,7 +95,10 @@ function Chat() {
           onChange={handleUserNameChange}
         />
       </div>
-      <div className="text-2xl font-semibold mt-12">All Messages</div>
+      <div className="text-2xl font-semibold mt-12 flex items-center">
+        All Messages :
+        <LiveCounter count={messages.length} />
+      </div>
       <div className="px-24 w-full space-y-4">
         <div className="w-full h-96 p-2 pt-4 rounded-xl ring-1 overflow-y-scroll flex flex-col justify-center items-start">
           {messages.length != 0 ? (
@@ -125,7 +127,7 @@ function Chat() {
             className="ring-1 rounded-2xl w-full px-3"
             placeholder="Type your message here..."
             value={text}
-            onKeyDown={handleSubmit}
+            // onKeyDown={handleSubmit}
             onChange={(e) => setText(e.target.value)}
           />
 
