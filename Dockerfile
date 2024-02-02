@@ -24,6 +24,12 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# Declare the arguments
+ARG NEXT_PUBLIC_SUPABASE_API_KEY
+
+# Assign the arguments to environment variables
+ENV NEXT_PUBLIC_SUPABASE_API_KEY=${NEXT_PUBLIC_SUPABASE_API_KEY}
+
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
