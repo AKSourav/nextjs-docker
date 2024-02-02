@@ -108,7 +108,7 @@ function Chat() {
         All Messages :
         <LiveCounter count={messages.length} />
       </div>
-      <div className="px-24 w-full space-y-4">
+      <div className="lg:px-24 w-full space-y-4">
         <div
           className="w-full h-96 p-2 pt-4 rounded-xl ring-1 overflow-y-scroll flex flex-col justify-center items-start"
           ref={chatbox}
