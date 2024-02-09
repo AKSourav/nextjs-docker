@@ -5,8 +5,11 @@ const withNextra = require('nextra')({
 })
 
 const NextConfig = {
-  ...withNextra(), 
+  ...withNextra(),
   output: "standalone",
+  experimental: {
+    serverActions: true,
+  },
 }
 
 module.exports = NextConfig

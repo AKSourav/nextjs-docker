@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/rohitranjan-2702/nextjs-docker#readme",
   "dependencies": {
+    "@supabase/ssr": "^0.1.0",
     "@supabase/supabase-js": "^2.39.3",
+    "cookie": "^0.6.0",
     "framer-motion": "^11.0.3",
     "next": "^13.0.6",
     "nextra": "latest",
