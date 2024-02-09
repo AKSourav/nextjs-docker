@@ -99,9 +99,9 @@ function Chat() {
   };
 
   useEffect(() => {
+    fetchMsg();
     if (user) {
       setUserName(user.email.split('@')[0])
-      fetchMsg();
       // console.log(messages);
     }
   }, [user]);
