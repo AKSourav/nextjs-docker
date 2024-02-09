@@ -8,7 +8,7 @@ const ChatHeader = ({ user }) => {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: `${window.location.origin}/api/auth/callback/route`,
+                redirectTo: `/api/auth/callback/route`,
             },
         });
         if (error) {
