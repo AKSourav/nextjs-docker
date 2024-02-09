@@ -24,6 +24,7 @@ jobs:
           tags: aksourav/nextjs-docker:0
           build-args: |
             NEXT_PUBLIC_SUPABASE_API_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_API_KEY }}
+            NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
 
       - name: Deploy to Render
         uses: johnbeynon/render-deploy-action@v0.0.8

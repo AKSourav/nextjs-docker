@@ -26,9 +26,11 @@ COPY . .
 
 # Declare the arguments
 ARG NEXT_PUBLIC_SUPABASE_API_KEY
+ARG NEXT_PUBLIC_SUPABASE_URL
 
 # Assign the arguments to environment variables
 ENV NEXT_PUBLIC_SUPABASE_API_KEY=${NEXT_PUBLIC_SUPABASE_API_KEY}
+ENV NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
